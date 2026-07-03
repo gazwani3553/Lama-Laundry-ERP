@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="Lama Laundry ERP - إدارة الخدمات">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>إدارة الخدمات | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/dashboard.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+    src="../assets/images/logo.png"
+    alt="Lama ERP">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+    <i class="fas fa-chart-line"></i>
+    <span>الرئيسية</span>
+</a>
+
+<a href="orders.html">
+    <i class="fas fa-basket-shopping"></i>
+    <span>الطلبات</span>
+</a>
+
+<a href="customers.html">
+    <i class="fas fa-users"></i>
+    <span>العملاء</span>
+</a>
+
+<a
+    href="services.html"
+    class="active">
+
+    <i class="fas fa-soap"></i>
+
+    <span>الخدمات</span>
+
+</a>
+
+<a href="pickup.html">
+    <i class="fas fa-truck-pickup"></i>
+    <span>الاستلام</span>
+</a>
+
+<a href="delivery.html">
+    <i class="fas fa-truck-fast"></i>
+    <span>التوصيل</span>
+</a>
+
+<a href="inventory.html">
+    <i class="fas fa-boxes-stacked"></i>
+    <span>المخزون</span>
+</a>
+
+<a href="employees.html">
+    <i class="fas fa-user-tie"></i>
+    <span>الموظفون</span>
+</a>
+
+<a href="reports.html">
+    <i class="fas fa-chart-pie"></i>
+    <span>التقارير</span>
+</a>
+
+<a href="settings.html">
+    <i class="fas fa-gear"></i>
+    <span>الإعدادات</span>
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<div>
+
+<h1>
+
+<i class="fas fa-soap"></i>
+
+إدارة الخدمات
+
+</h1>
+
+<p>
+
+إدارة جميع خدمات مغاسل لمى
+
+</p>
+
+</div>
+
+<div class="actions">
+search() {
+
+    const keyword = this.dom.search.value
+        .trim()
+        .toLowerCase();
+
+    if (!keyword) {
+
+        this.state.filtered = [
+
+            ...this.state.services
+
+        ];
+
+        this.render();
+
+        return;
+
+    }
+
+    this.state.filtered = this.state.services.filter(service => {
+
+        return (
+
+            (service.name || "")
+                .toLowerCase()
+                .includes(keyword)
+
+            ||
+
+            (service.code || "")
+                .toLowerCase()
+                .includes(keyword)
+
+            ||
+
+            (service.category || "")
+                .toLowerCase()
+                .includes(keyword)
+
+            ||
+
+            (service.description || "")
+                .toLowerCase()
+                .includes(keyword)
+
+        );
+
+    });
+
+    this.render();
+
+}   width:240px;">
+
+<button
+    id="addServiceBtn"
+    class="primary-btn">
+
+<i class="fas fa-plus"></i>
+
+إضافة خدمة
+
+</button>
+
+</div>
+
+</header>
+
+<section class="dashboard-card">
+
+<table class="mini-table">
+
+<thead>
+
+<tr>
+
+<th>#</th>
+
+<th>الخدمة</th>
+
+<th>الكود</th>
+
+<th>اللون</th>
+
+<th>الأيقونة</th>
+
+<th>الترتيب</th>
+
+<th>الحالة</th>
+
+<th>الإجراءات</th>
+
+</tr>
+
+</thead>
+
+<tbody id="servicesTable">
+
+<tr>
+
+<td colspan="8">
+
+جاري تحميل الخدمات...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<!-- نافذة إضافة / تعديل خدمة -->
+
+<div
+    id="serviceModal"
+    class="modal"
+    style="display:none;">
+
+<div
+    class="modal-content"
+    style="max-width:600px;">
+
+<form id="serviceForm">
+
+<input
+    type="hidden"
+    id="serviceId">
+
+<div class="form-group">
+
+<label>
+
+اسم الخدمة
+
+</label>
+
+<input
+    type="text"
+    id="serviceName"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+الكود
+
+</label>
+
+<input
+    type="text"
+    id="serviceCode"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+اللون
+
+</label>
+
+<input
+    type="color"
+    id="serviceColor"
+    value="#0d6efd">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+الأيقونة
+
+</label>
+
+<input
+    type="text"
+    id="serviceIcon"
+    placeholder="local_laundry_service">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+ترتيب الظهور
+
+</label>
+
+<input
+    type="number"
+    id="serviceSort"
+    value="1">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+الحالة
+
+</label>
+
+<select id="serviceActive">
+
+<option value="true">
+
+نشطة
+
+</option>
+
+<option value="false">
+
+غير نشطة
+
+</option>
+
+</select>
+
+</div>
+
+<div
+    style="
+    display:flex;
+    gap:10px;
+    margin-top:20px;">
+
+<button
+    type="submit"
+    class="primary-btn">
+
+<i class="fas fa-save"></i>
+
+حفظ
+
+</button>
+
+<button
+    type="button"
+    id="cancelModal"
+    class="secondary-btn">
+
+إلغاء
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<footer
+    style="
+    margin-top:30px;
+    text-align:center;
+    color:#777;">
+
+Lama Laundry ERP v2.0
+
+</footer>
+
+</main>
+
+</div>
+
+<!-- Firebase -->
+
+<script
+    type="module"
+    src="../firebase/auth-guard.js">
+</script>
+
+<script
+    type="module"
+    src="../firebase/logout.js">
+</script>
+
+<!-- Services -->
+
+<script
+    type="module"
+    src="../assets/js/services.js">
+</script>
+
+<style>
+
+.modal{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.45);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+.modal-content{
+
+background:#fff;
+
+padding:25px;
+
+border-radius:12px;
+
+width:95%;
+
+max-width:650px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+
+}
+
+.form-group{
+
+display:flex;
+
+flex-direction:column;
+
+margin-bottom:15px;
+
+}
+
+.form-group label{
+
+font-weight:700;
+
+margin-bottom:6px;
+
+}
+
+.form-group input,
+
+.form-group select{
+
+padding:10px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+font-family:Cairo,sans-serif;
+
+font-size:15px;
+
+}
+
+.primary-btn{
+
+background:#0d6efd;
+
+color:#fff;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-family:Cairo,sans-serif;
+
+font-weight:700;
+
+}
+
+.primary-btn:hover{
+
+background:#0b5ed7;
+
+}
+
+.secondary-btn{
+
+background:#e9ecef;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-family:Cairo,sans-serif;
+
+font-weight:700;
+
+}
+
+.secondary-btn:hover{
+
+background:#d6d8db;
+
+}
+
+.color-box{
+
+width:35px;
+
+height:35px;
+
+border-radius:8px;
+
+display:inline-block;
+
+border:1px solid #ddd;
+
+}
+
+.action-btn{
+
+border:none;
+
+background:none;
+
+cursor:pointer;
+
+font-size:18px;
+
+margin:0 4px;
+
+}
+
+.edit-btn{
+
+color:#0d6efd;
+
+}
+
+.delete-btn{
+
+color:#dc3545;
+
+}
+
+@media(max-width:768px){
+
+.actions{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+.actions input{
+
+width:100%!important;
+
+}
+
+table{
+
+font-size:13px;
+
+}
+
+}
+
+</style>
+
+</body>
+
+</html>

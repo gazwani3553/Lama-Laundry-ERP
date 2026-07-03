@@ -1,0 +1,89 @@
+// ===========================================
+// Lama Laundry ERP
+// Shared Customer Utilities
+// ===========================================
+
+import { db } from "../../../firebase/firebase-config.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    updateDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+// ===========================================
+// تحديث إحصائيات العميل
+// ===========================================
+
+export async function updateCustomerStatistics(customerId) {
+
+    if (!customerId) return;
+
+    try {
+
+        const q = query(
+
+            collection(db, "orders"),
+
+            where("customerId", "==", customerId)
+
+        );
+
+        const snapshot = await getDocs(q);
+
+        let ordersCount = 0;
+
+        let totalSpent = 0;
+
+        let lastVisit = "-";
+
+        snapshot.forEach(docSnap => {
+
+            const order = docSnap.data();
+
+            ordersCount++;
+
+            totalSpent += Number(order.totalAmount || 0);
+
+            if (order.createdDate) {
+
+                lastVisit = order.createdDate;
+
+            }
+
+        });
+
+        await updateDoc(
+
+            doc(db, "customers", customerId),
+
+            {
+
+                ordersCount,
+
+                totalSpent,
+
+                lastVisit
+
+            }
+
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+
+            "Customer Statistics:",
+
+            error
+
+        );
+
+    }
+
+}

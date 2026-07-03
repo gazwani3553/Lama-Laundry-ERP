@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="إدارة الموظفين - Lama Laundry ERP">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>الموظفون | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/employees.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+    src="../assets/images/logo.png"
+    alt="Lama Laundry ERP Logo"
+    loading="lazy">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+<i class="fas fa-chart-line"></i>
+<span>الرئيسية</span>
+</a>
+
+<a href="orders.html">
+<i class="fas fa-basket-shopping"></i>
+<span>الطلبات</span>
+</a>
+
+<a href="customers.html">
+<i class="fas fa-users"></i>
+<span>العملاء</span>
+</a>
+
+<a href="pickup.html">
+<i class="fas fa-truck-pickup"></i>
+<span>الاستلام</span>
+</a>
+
+<a href="delivery.html">
+<i class="fas fa-truck-fast"></i>
+<span>التوصيل</span>
+</a>
+
+<a href="inventory.html">
+<i class="fas fa-boxes-stacked"></i>
+<span>المخزون</span>
+</a>
+
+<a
+href="employees.html"
+class="active"
+aria-current="page">
+<i class="fas fa-user-tie"></i>
+<span>الموظفون</span>
+</a>
+
+<a href="reports.html">
+<i class="fas fa-chart-pie"></i>
+<span>التقارير</span>
+</a>
+
+<a href="settings.html">
+<i class="fas fa-gear"></i>
+<span>الإعدادات</span>
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+    <div>
+
+        <h1>إدارة الموظفين</h1>
+
+        <p>إدارة بيانات الموظفين والرواتب والصلاحيات</p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            id="refreshEmployees"
+            type="button"
+            aria-label="تحديث بيانات الموظفين">
+
+            <i class="fas fa-rotate"></i>
+
+            تحديث
+
+        </button>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            type="button"
+            aria-label="تسجيل الخروج">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            تسجيل الخروج
+
+        </button>
+
+        <button
+            id="newEmployeeBtn"
+            class="primary"
+            type="button"
+            aria-label="إضافة موظف جديد">
+
+            <i class="fas fa-user-plus"></i>
+
+            إضافة موظف
+
+        </button>
+
+    </div>
+
+</header>
+
+<!-- بطاقات الإحصائيات -->
+
+<section class="cards">
+
+    <div class="card">
+
+        <h2 id="employeesCount">0</h2>
+
+        <span>إجمالي الموظفين</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="activeEmployees">0</h2>
+
+        <span>الموظفون النشطون</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="driversCount">0</h2>
+
+        <span>عدد السائقين</span>
+
+    </div>
+
+</section>
+
+<!-- أدوات البحث -->
+
+<section class="toolbar">
+
+    <input
+        id="searchEmployee"
+        type="search"
+        autocomplete="off"
+        placeholder="بحث باسم الموظف أو رقم الجوال">
+
+    <select id="employeeFilter">
+
+        <option value="">كل الموظفين</option>
+
+        <option value="عامل">عامل</option>
+
+        <option value="سائق">سائق</option>
+
+        <option value="مدير">مدير</option>
+
+    </select>
+
+</section>
+
+<!-- جدول الموظفين -->
+
+<section class="table-section">
+
+    <table class="employees-table">
+
+        <thead>
+
+            <tr>
+
+                <th>الاسم</th>
+                <th>رقم الجوال</th>
+                <th>الوظيفة</th>
+                <th>الراتب</th>
+                <th>الحالة</th>
+                <th>تاريخ التعيين</th>
+                <th>الإجراءات</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="employeesTableBody">
+
+            <!-- employees.js -->
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<!-- نافذة إضافة / تعديل موظف -->
+
+<div
+    id="employeeModal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="employeeModalTitle">
+
+                إضافة موظف
+
+            </h2>
+
+            <button
+                id="closeEmployeeModal"
+                type="button"
+                aria-label="إغلاق">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <form id="employeeForm">
+
+            <div class="grid">
+
+                <div class="field">
+
+                    <label for="employeeName">
+
+                        اسم الموظف
+
+                    </label>
+
+                    <input
+                        id="employeeName"
+                        type="text"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="employeePhone">
+
+                        رقم الجوال
+
+                    </label>
+
+                    <input
+                        id="employeePhone"
+                        type="tel"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="employeeRole">
+
+                        الوظيفة
+
+                    </label>
+
+                    <select id="employeeRole">
+
+                        <option>عامل</option>
+                        <option>سائق</option>
+                        <option>مدير</option>
+
+                    </select>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="employeeSalary">
+
+                        الراتب
+
+                    </label>
+
+                    <input
+                        id="employeeSalary"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="employeeStatus">
+
+                        الحالة
+
+                    </label>
+
+                    <select id="employeeStatus">
+
+                        <option>نشط</option>
+                        <option>إجازة</option>
+                        <option>موقوف</option>
+
+                    </select>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="hireDate">
+
+                        تاريخ التعيين
+
+                    </label>
+
+                    <input
+                        id="hireDate"
+                        type="date">
+
+                </div>
+
+                <div class="field full">
+
+                    <label for="employeeNotes">
+
+                        ملاحظات
+
+                    </label>
+
+                    <textarea
+                        id="employeeNotes"
+                        rows="4"></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="cancelEmployeeBtn"
+                    type="button">
+
+                    إلغاء
+
+                </button>
+
+                <button
+                    class="primary"
+                    type="submit">
+
+                    <i class="fas fa-save"></i>
+
+                    حفظ الموظف
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+
+<!-- حماية الصفحة -->
+<script
+    type="module"
+    src="../firebase/auth-guard.js">
+</script>
+
+<!-- تسجيل الخروج -->
+<script
+    type="module"
+    src="../firebase/logout.js">
+</script>
+
+<!-- منطق صفحة الموظفين -->
+<script
+    type="module"
+    src="../assets/js/employees.js">
+</script>
+
+</main>
+
+</div>
+
+</body>
+
+</html>

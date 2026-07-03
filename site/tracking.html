@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تتبع الطلب | مغاسل لمى الذكية</title>
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<style>
+
+body{
+background:#f5f7fb;
+font-family:Cairo,sans-serif;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:800px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+h1{
+text-align:center;
+color:#0f4c81;
+margin-bottom:30px;
+}
+.search-box{
+
+display:grid;
+
+grid-template-columns:1fr 150px;
+
+gap:10px;
+
+align-items:center;
+
+}
+
+#orderNumber{
+
+width:100%;
+
+padding:14px;
+
+font-size:16px;
+
+border:1px solid #ccc;
+
+border-radius:8px;
+
+box-sizing:border-box;
+
+}
+#searchBtn{
+
+width:100%;
+
+padding:14px;
+
+font-size:16px;
+
+}
+
+#searchBtn:hover{
+
+background:#0b3c66;
+
+}
+
+#notFound{
+
+display:none;
+
+background:#fff3cd;
+
+color:#856404;
+
+padding:15px;
+
+border-radius:8px;
+
+margin-top:20px;
+
+text-align:center;
+
+font-weight:bold;
+
+}
+
+#resultCard{
+
+display:none;
+
+margin-top:25px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+overflow:hidden;
+
+}
+
+#resultCard table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+#resultCard th{
+
+background:#f8f9fa;
+
+padding:12px;
+
+width:35%;
+
+text-align:right;
+
+border:1px solid #eee;
+
+}
+
+#resultCard td{
+
+padding:12px;
+
+border:1px solid #eee;
+
+}
+
+.status{
+
+display:inline-block;
+
+padding:6px 14px;
+
+border-radius:20px;
+
+background:#0f4c81;
+
+color:#fff;
+
+font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>تتبع حالة الطلب</h1>
+
+<div class="search-box">
+
+<input
+type="text"
+id="orderNumber"
+placeholder="اكتب رقم الطلب مثل LM1782853529117">
+
+<button
+type="button"
+id="searchBtn">
+
+🔍 بحث
+
+</button>
+
+</div>
+
+<div id="notFound">
+
+لم يتم العثور على الطلب.
+
+</div>
+
+<div id="resultCard">
+
+<table>
+
+<tr>
+<th>رقم الطلب</th>
+<td id="rOrderNumber"></td>
+</tr>
+
+<tr>
+<th>اسم العميل</th>
+<td id="rCustomer"></td>
+</tr>
+
+<tr>
+<th>رقم الجوال</th>
+<td id="rPhone"></td>
+</tr>
+
+<tr>
+<th>الخدمة</th>
+<td id="rService"></td>
+</tr>
+
+<tr>
+<th>عدد القطع</th>
+<td id="rPieces"></td>
+</tr>
+
+<tr>
+<th>الإجمالي</th>
+<td id="rTotal"></td>
+</tr>
+
+<tr>
+<th>الحالة</th>
+<td><span id="rStatus" class="status"></span></td>
+</tr>
+
+<tr>
+<th>التاريخ</th>
+<td id="rDate"></td>
+</tr>
+
+<tr>
+<th>الملاحظات</th>
+<td id="rNotes"></td>
+</tr>
+
+</table>
+
+</div>
+
+<script type="module">
+
+import { db } from "../firebase/firebase-config.js";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+document
+.getElementById("searchBtn")
+.addEventListener("click", searchOrder);
+
+async function searchOrder() {
+
+    const orderNumber =
+        document.getElementById("orderNumber").value.trim();
+
+    if (orderNumber === "") {
+
+        alert("يرجى إدخال رقم الطلب");
+
+        return;
+
+    }
+
+    document.getElementById("notFound").style.display = "none";
+    document.getElementById("resultCard").style.display = "none";
+
+    try {
+
+        const q = query(
+            collection(db, "orders"),
+            where("orderNumber", "==", orderNumber)
+        );
+
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+
+            document.getElementById("notFound").style.display = "block";
+
+            return;
+
+        }
+
+        const order = snapshot.docs[0].data();
+
+        document.getElementById("rOrderNumber").textContent =
+            order.orderNumber ?? "-";
+
+        document.getElementById("rCustomer").textContent =
+            order.customerName ?? order.name ?? "-";
+
+        document.getElementById("rPhone").textContent =
+            order.customerPhone ?? order.phone ?? "-";
+
+        document.getElementById("rService").textContent =
+            order.serviceType ?? order.service ?? "-";
+
+        document.getElementById("rPieces").textContent =
+            order.pieces ?? 1;
+
+        document.getElementById("rTotal").textContent =
+            Number(order.totalAmount ?? order.price ?? 0).toFixed(2) + " ر.س";
+
+        document.getElementById("rStatus").textContent =
+            order.status ?? "-";
+
+        document.getElementById("rDate").textContent =
+            order.createdDate ?? order.date ?? "-";
+
+        document.getElementById("rNotes").textContent =
+            order.notes ?? "-";
+
+        document.getElementById("resultCard").style.display = "block";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("حدث خطأ أثناء البحث عن الطلب.");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

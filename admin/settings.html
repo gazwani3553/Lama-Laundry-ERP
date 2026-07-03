@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="إعدادات النظام - Lama Laundry ERP">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>الإعدادات | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/settings.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+    src="../assets/images/logo.png"
+    alt="Lama Laundry ERP Logo"
+    loading="lazy">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+<i class="fas fa-chart-line"></i>
+<span>الرئيسية</span>
+</a>
+
+<a href="orders.html">
+<i class="fas fa-basket-shopping"></i>
+<span>الطلبات</span>
+</a>
+
+<a href="customers.html">
+<i class="fas fa-users"></i>
+<span>العملاء</span>
+</a>
+
+<a href="pickup.html">
+<i class="fas fa-truck-pickup"></i>
+<span>الاستلام</span>
+</a>
+
+<a href="delivery.html">
+<i class="fas fa-truck-fast"></i>
+<span>التوصيل</span>
+</a>
+
+<a href="inventory.html">
+<i class="fas fa-boxes-stacked"></i>
+<span>المخزون</span>
+</a>
+
+<a href="employees.html">
+<i class="fas fa-user-tie"></i>
+<span>الموظفون</span>
+</a>
+
+<a href="reports.html">
+<i class="fas fa-chart-pie"></i>
+<span>التقارير</span>
+</a>
+
+<a
+href="settings.html"
+class="active"
+aria-current="page">
+<i class="fas fa-gear"></i>
+<span>الإعدادات</span>
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+    <div>
+
+        <h1>إعدادات النظام</h1>
+
+        <p>إدارة إعدادات المغسلة والفواتير والنسخ الاحتياطي</p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            id="saveSettings"
+            class="primary"
+            type="button"
+            aria-label="حفظ الإعدادات">
+
+            <i class="fas fa-floppy-disk"></i>
+
+            حفظ الإعدادات
+
+        </button>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            type="button"
+            aria-label="تسجيل الخروج">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            تسجيل الخروج
+
+        </button>
+
+    </div>
+
+</header>
+
+<section class="settings-grid">
+
+    <!-- بيانات المغسلة -->
+
+    <div class="setting-card">
+
+        <h3>بيانات المغسلة</h3>
+
+        <div class="field">
+
+            <label for="laundryName">
+
+                اسم المغسلة
+
+            </label>
+
+            <input
+                id="laundryName"
+                type="text">
+
+        </div>
+
+        <div class="field">
+
+            <label for="laundryPhone">
+
+                رقم الجوال
+
+            </label>
+
+            <input
+                id="laundryPhone"
+                type="tel">
+
+        </div>
+
+        <div class="field">
+
+            <label for="laundryAddress">
+
+                العنوان
+
+            </label>
+
+            <input
+                id="laundryAddress"
+                type="text">
+
+        </div>
+
+    </div>
+
+    <!-- إعدادات الفاتورة -->
+
+    <div class="setting-card">
+
+        <h3>إعدادات الفاتورة</h3>
+
+        <div class="field">
+
+            <label for="invoicePrefix">
+
+                بادئة رقم الفاتورة
+
+            </label>
+
+            <input
+                id="invoicePrefix"
+                type="text">
+
+        </div>
+
+        <div class="field">
+
+            <label for="vatRate">
+
+                نسبة الضريبة (%)
+
+            </label>
+
+            <input
+                id="vatRate"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01">
+
+        </div>
+
+        <div class="field">
+
+            <label for="currency">
+
+                العملة
+
+            </label>
+
+            <input
+                id="currency"
+                type="text">
+
+        </div>
+
+    </div>
+
+    <!-- إعدادات النظام -->
+
+    <div class="setting-card">
+
+        <h3>إعدادات النظام</h3>
+
+        <div class="field">
+
+            <label for="systemLanguage">
+
+                اللغة
+
+            </label>
+
+            <select id="systemLanguage">
+
+                <option value="ar">العربية</option>
+
+                <option value="en">English</option>
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label for="themeMode">
+
+                المظهر
+
+            </label>
+
+            <select id="themeMode">
+
+                <option value="light">فاتح</option>
+
+                <option value="dark">داكن</option>
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label for="autoPrint">
+
+                الطباعة التلقائية
+
+            </label>
+
+            <select id="autoPrint">
+
+                <option value="yes">نعم</option>
+
+                <option value="no">لا</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- النسخ الاحتياطي -->
+
+    <div class="setting-card">
+
+        <h3>النسخ الاحتياطي</h3>
+
+        <div class="actions-column">
+
+            <button
+                id="backupBtn"
+                class="primary"
+                type="button"
+                aria-label="إنشاء نسخة احتياطية">
+
+                <i class="fas fa-download"></i>
+
+                إنشاء نسخة احتياطية
+
+            </button>
+
+            <button
+                id="restoreBtn"
+                type="button"
+                aria-label="استعادة نسخة احتياطية">
+
+                <i class="fas fa-upload"></i>
+
+                استعادة نسخة احتياطية
+
+            </button>
+
+            <input
+                id="restoreFile"
+                type="file"
+                accept=".json"
+                hidden>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- JavaScript -->
+
+<!-- حماية الصفحة -->
+<script
+    type="module"
+    src="../firebase/auth-guard.js">
+</script>
+
+<!-- تسجيل الخروج -->
+<script
+    type="module"
+    src="../firebase/logout.js">
+</script>
+
+<!-- منطق صفحة الإعدادات -->
+<script
+    type="module"
+    src="../assets/js/settings.js">
+</script>
+
+</main>
+
+</div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="إدارة عمليات توصيل الطلبات - Lama Laundry ERP">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>التوصيل | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/delivery.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+    src="../assets/images/logo.png"
+    alt="Lama Laundry ERP Logo"
+    loading="lazy">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+<i class="fas fa-chart-line"></i>
+<span>الرئيسية</span>
+</a>
+
+<a href="orders.html">
+<i class="fas fa-basket-shopping"></i>
+<span>الطلبات</span>
+</a>
+
+<a href="customers.html">
+<i class="fas fa-users"></i>
+<span>العملاء</span>
+</a>
+
+<a href="pickup.html">
+<i class="fas fa-truck-pickup"></i>
+<span>الاستلام</span>
+</a>
+
+<a
+href="delivery.html"
+class="active"
+aria-current="page">
+<i class="fas fa-truck-fast"></i>
+<span>التوصيل</span>
+</a>
+
+<a href="inventory.html">
+<i class="fas fa-boxes-stacked"></i>
+<span>المخزون</span>
+</a>
+
+<a href="employees.html">
+<i class="fas fa-user-tie"></i>
+<span>الموظفون</span>
+</a>
+
+<a href="reports.html">
+<i class="fas fa-chart-pie"></i>
+<span>التقارير</span>
+</a>
+
+<a href="settings.html">
+<i class="fas fa-gear"></i>
+<span>الإعدادات</span>
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+    <div>
+
+        <h1>طلبات التوصيل</h1>
+
+        <p>إدارة عمليات توصيل الطلبات إلى العملاء</p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            id="refreshDelivery"
+            type="button"
+            aria-label="تحديث عمليات التوصيل">
+
+            <i class="fas fa-rotate"></i>
+
+            تحديث
+
+        </button>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            type="button"
+            aria-label="تسجيل الخروج">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            تسجيل الخروج
+
+        </button>
+
+        <button
+            id="newDeliveryBtn"
+            class="primary"
+            type="button"
+            aria-label="إضافة عملية توصيل">
+
+            <i class="fas fa-plus"></i>
+
+            عملية توصيل جديدة
+
+        </button>
+
+    </div>
+
+</header>
+
+<!-- بطاقات الإحصائيات -->
+
+<section class="cards">
+
+    <div class="card">
+
+        <h2 id="deliveryCount">0</h2>
+
+        <span>إجمالي الطلبات</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="waitingDelivery">0</h2>
+
+        <span>بانتظار التوصيل</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="completedDelivery">0</h2>
+
+        <span>تم التسليم</span>
+
+    </div>
+
+</section>
+
+<!-- أدوات البحث -->
+
+<section class="toolbar">
+
+    <input
+        id="searchDelivery"
+        type="search"
+        autocomplete="off"
+        placeholder="بحث برقم الطلب أو اسم العميل أو رقم الجوال">
+
+    <select id="deliveryFilter">
+
+        <option value="">كل الحالات</option>
+
+        <option value="بانتظار التوصيل">
+            بانتظار التوصيل
+        </option>
+
+        <option value="خرج للتوصيل">
+            خرج للتوصيل
+        </option>
+
+        <option value="تم التسليم">
+            تم التسليم
+        </option>
+
+    </select>
+
+</section>
+
+<!-- جدول التوصيل -->
+
+<section class="table-section">
+
+    <table class="delivery-table">
+
+        <thead>
+
+            <tr>
+
+                <th>رقم الطلب</th>
+                <th>اسم العميل</th>
+                <th>رقم الجوال</th>
+                <th>عنوان التوصيل</th>
+                <th>السائق</th>
+                <th>موعد التوصيل</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="deliveryTableBody">
+
+            <!-- delivery.js -->
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<!-- نافذة إضافة / تعديل عملية التوصيل -->
+
+<div
+    id="deliveryModal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="deliveryModalTitle">
+
+                إضافة عملية توصيل
+
+            </h2>
+
+            <button
+                id="closeDeliveryModal"
+                type="button"
+                aria-label="إغلاق">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <form id="deliveryForm">
+
+            <div class="grid">
+
+                <div class="field">
+
+                    <label for="deliveryOrderNumber">
+
+                        رقم الطلب
+
+                    </label>
+
+                    <input
+                        id="deliveryOrderNumber"
+                        type="text"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="deliveryCustomerName">
+
+                        اسم العميل
+
+                    </label>
+
+                    <input
+                        id="deliveryCustomerName"
+                        type="text"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="deliveryPhone">
+
+                        رقم الجوال
+
+                    </label>
+
+                    <input
+                        id="deliveryPhone"
+                        type="tel"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="deliveryAddress">
+
+                        عنوان التوصيل
+
+                    </label>
+
+                    <input
+                        id="deliveryAddress"
+                        type="text"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="deliveryDriver">
+
+                        السائق
+
+                    </label>
+
+                    <input
+                        id="deliveryDriver"
+                        type="text">
+
+                </div>
+
+                <div class="field">
+
+                    <label for="deliveryDateTime">
+
+                        موعد التوصيل
+
+                    </label>
+
+                    <input
+                        id="deliveryDateTime"
+                        type="datetime-local">
+
+                </div>
+
+                <div class="field">
+
+                    <label for="deliveryStatus">
+
+                        الحالة
+
+                    </label>
+
+                    <select id="deliveryStatus">
+
+                        <option>بانتظار التوصيل</option>
+                        <option>خرج للتوصيل</option>
+                        <option>تم التسليم</option>
+
+                    </select>
+
+                </div>
+
+                <div class="field full">
+
+                    <label for="deliveryNotes">
+
+                        ملاحظات
+
+                    </label>
+
+                    <textarea
+                        id="deliveryNotes"
+                        rows="4"></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="cancelDeliveryBtn"
+                    type="button">
+
+                    إلغاء
+
+                </button>
+
+                <button
+                    class="primary"
+                    type="submit">
+
+                    <i class="fas fa-save"></i>
+
+                    حفظ
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+
+<!-- التحقق من تسجيل الدخول -->
+<script
+    type="module"
+    src="../firebase/auth-guard.js">
+</script>
+
+<!-- تسجيل الخروج -->
+<script
+    type="module"
+    src="../firebase/logout.js">
+</script>
+
+<!-- منطق صفحة التوصيل -->
+<script
+    type="module"
+    src="../assets/js/delivery.js">
+</script>
+
+</main>
+
+</div>
+
+</body>
+
+</html>

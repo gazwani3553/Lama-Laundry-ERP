@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<meta name="description"
+      content="Lama Laundry ERP Professional">
+
+<title>إدارة الطلبات | Lama Laundry ERP</title>
+
+<link rel="icon"
+      href="../assets/images/favicon.png">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="../assets/css/main.css">
+
+<link rel="stylesheet"
+      href="../assets/css/orders.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- ==========================
+     القائمة الجانبية
+=========================== -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img src="../assets/images/logo.png"
+     alt="Lama Laundry ERP">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+
+<i class="fas fa-chart-line"></i>
+
+<span>الرئيسية</span>
+
+</a>
+
+<a href="orders.html"
+   class="active">
+
+<i class="fas fa-basket-shopping"></i>
+
+<span>الطلبات</span>
+
+</a>
+
+<a href="customers.html">
+
+<i class="fas fa-users"></i>
+
+<span>العملاء</span>
+
+</a>
+
+<a href="services.html">
+
+<i class="fas fa-shirt"></i>
+
+<span>الخدمات</span>
+
+</a>
+
+<a href="pickup.html">
+
+<i class="fas fa-truck"></i>
+
+<span>الاستلام</span>
+
+</a>
+
+<a href="inventory.html">
+
+<i class="fas fa-boxes-stacked"></i>
+
+<span>المخزون</span>
+
+</a>
+
+<a href="employees.html">
+
+<i class="fas fa-user-tie"></i>
+
+<span>الموظفون</span>
+
+</a>
+
+<a href="reports.html">
+
+<i class="fas fa-chart-pie"></i>
+
+<span>التقارير</span>
+
+</a>
+
+<a href="settings.html">
+
+<i class="fas fa-gear"></i>
+
+<span>الإعدادات</span>
+
+</a>
+
+</nav>
+
+</aside>
+
+<!-- ==========================
+     المحتوى
+=========================== -->
+
+<main class="content">
+
+<header class="topbar">
+
+<div>
+
+<h1>
+
+<i class="fas fa-basket-shopping"></i>
+
+إدارة الطلبات
+
+</h1>
+
+<p>
+
+إدارة ومتابعة جميع طلبات العملاء
+
+</p>
+
+</div>
+
+<div class="actions">
+
+<button
+id="newOrderBtn"
+class="btn-primary">
+
+<i class="fas fa-plus"></i>
+
+طلب جديد
+
+</button>
+
+<button
+id="refreshOrders"
+class="btn-secondary">
+
+<i class="fas fa-rotate"></i>
+
+تحديث
+
+</button>
+
+</div>
+
+</header>
+
+<!-- ==========================
+     بطاقات الإحصائيات
+=========================== -->
+
+<section class="cards">
+
+<div class="card">
+
+<div class="card-icon">
+
+<i class="fas fa-clipboard-list"></i>
+
+</div>
+
+<div class="card-info">
+
+<h2 id="totalOrders">
+
+0
+
+</h2>
+
+<p>
+
+إجمالي الطلبات
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">
+
+<i class="fas fa-circle-plus"></i>
+
+</div>
+
+<div class="card-info">
+
+<h2 id="newOrders">
+
+0
+
+</h2>
+
+<p>
+
+طلبات جديدة
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">
+
+<i class="fas fa-box-open"></i>
+
+</div>
+
+<div class="card-info">
+
+<h2 id="readyOrders">
+
+0
+
+</h2>
+
+<p>
+
+جاهزة للتسليم
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">
+
+<i class="fas fa-circle-check"></i>
+
+</div>
+
+<div class="card-info">
+
+<h2 id="deliveredOrders">
+
+0
+
+</h2>
+
+<p>
+
+تم التسليم
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================
+     أدوات البحث والفلترة
+=========================== -->
+
+<section class="toolbar">
+
+<div class="toolbar-left">
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input
+type="search"
+id="searchInput"
+placeholder="بحث برقم الطلب أو اسم العميل أو رقم الجوال">
+
+</div>
+
+</div>
+
+<div class="toolbar-right">
+
+<select id="statusFilter">
+
+<option value="">
+
+جميع الحالات
+
+</option>
+
+<option value="طلب جديد">
+
+طلب جديد
+
+</option>
+
+<option value="قيد الغسيل">
+
+قيد الغسيل
+
+</option>
+
+<option value="قيد الكي">
+
+قيد الكي
+
+</option>
+
+<option value="جاهز">
+
+جاهز
+
+</option>
+
+<option value="تم التسليم">
+
+تم التسليم
+
+</option>
+
+<option value="ملغي">
+
+ملغي
+
+</option>
+
+</select>
+
+</div>
+
+</section>
+
+<!-- ==========================
+     جدول الطلبات
+=========================== -->
+
+<section class="table-card">
+
+<div class="table-responsive">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th width="120">
+
+رقم الطلب
+
+</th>
+
+<th>
+
+العميل
+
+</th>
+
+<th width="140">
+
+الجوال
+
+</th>
+
+<th>
+
+الخدمة
+
+</th>
+
+<th width="80">
+
+القطع
+
+</th>
+
+<th width="120">
+
+الإجمالي
+
+</th>
+
+<th width="130">
+
+الحالة
+
+</th>
+
+<th width="120">
+
+التاريخ
+
+</th>
+
+<th width="160">
+
+الإجراءات
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="ordersTableBody">
+
+<tr>
+
+<td colspan="9" class="empty-table">
+
+<i class="fas fa-spinner fa-spin"></i>
+
+جارِ تحميل الطلبات...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- ==========================
+     نافذة الطلب
+=========================== -->
+
+<div
+id="orderModal"
+class="modal hidden">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2 id="modalTitle">
+
+<i class="fas fa-basket-shopping"></i>
+
+طلب جديد
+
+</h2>
+
+<button
+id="closeModal"
+type="button"
+class="close-btn">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+</div>
+
+<form id="orderForm">
+
+<div class="form-grid">
+
+<!-- رقم الطلب -->
+
+<div class="form-group">
+
+<label>
+
+رقم الطلب
+
+</label>
+
+<input
+id="orderNumber"
+type="text"
+readonly>
+
+</div>
+
+<!-- العميل -->
+
+<div class="form-group">
+
+<label>
+
+العميل
+
+</label>
+
+<select
+id="customerName"
+required>
+
+<option value="">
+
+اختر العميل
+
+</option>
+
+</select>
+
+</div>
+
+<!-- رقم الجوال -->
+
+<div class="form-group">
+
+<label>
+
+رقم الجوال
+
+</label>
+
+<input
+id="customerPhone"
+type="tel"
+readonly>
+
+</div>
+
+<!-- الخدمة -->
+
+<div class="form-group">
+
+<label>
+
+الخدمة
+
+</label>
+
+<select
+id="serviceType"
+required>
+
+<option value="">
+
+اختر الخدمة
+
+</option>
+
+</select>
+
+</div>
+
+<!-- سعر الخدمة -->
+
+<div class="form-group">
+
+<label>
+
+سعر الخدمة
+
+</label>
+
+<input
+id="unitPrice"
+type="number"
+step="0.01"
+readonly>
+
+</div>
+
+<!-- عدد القطع -->
+
+<div class="form-group">
+
+<label>
+
+عدد القطع
+
+</label>
+
+<input
+id="pieces"
+type="number"
+min="1"
+value="1"
+required>
+
+</div>
+
+<!-- الإجمالي -->
+
+<div class="form-group">
+
+<label>
+
+إجمالي المبلغ
+
+</label>
+
+<input
+id="totalAmount"
+type="number"
+step="0.01"
+readonly>
+
+</div>
+
+<!-- حالة الطلب -->
+
+<div class="form-group">
+
+<label>
+
+حالة الطلب
+
+</label>
+
+<select id="orderStatus">
+
+<option value="طلب جديد">طلب جديد</option>
+
+<option value="قيد الغسيل">قيد الغسيل</option>
+
+<option value="قيد الكي">قيد الكي</option>
+
+<option value="جاهز">جاهز</option>
+
+<option value="تم التسليم">تم التسليم</option>
+
+<option value="ملغي">ملغي</option>
+
+</select>
+
+</div>
+
+<!-- الملاحظات -->
+
+<div class="form-group full-width">
+
+<label>
+
+الملاحظات
+
+</label>
+
+<textarea
+id="notes"
+rows="4"
+placeholder="أدخل أي ملاحظات خاصة بالطلب..."></textarea>
+
+</div>
+
+</div>
+
+<!-- أزرار النافذة -->
+
+<div class="modal-actions">
+
+<button
+type="submit"
+class="btn-primary">
+
+<i class="fas fa-save"></i>
+
+حفظ الطلب
+
+</button>
+
+<button
+type="button"
+id="cancelBtn"
+class="btn-secondary">
+
+<i class="fas fa-xmark"></i>
+
+إلغاء
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- =======================================
+     Toast Notification
+======================================= -->
+
+<div
+id="toast"
+class="toast hidden">
+
+<span id="toastMessage">
+
+تمت العملية بنجاح
+
+</span>
+
+</div>
+
+<!-- =======================================
+     شاشة التحميل
+======================================= -->
+
+<div
+id="loadingOverlay"
+class="loading-overlay hidden">
+
+<div class="loading-box">
+
+<i class="fas fa-spinner fa-spin fa-2x"></i>
+
+<p>
+
+جارٍ تحميل البيانات...
+
+</p>
+
+</div>
+
+</div>
+
+<!-- =======================================
+     JavaScript
+======================================= -->
+
+<script type="module"
+src="../firebase/auth-guard.js"></script>
+
+<script type="module"
+src="../firebase/logout.js"></script>
+
+<script type="module"
+src="../assets/js/orders.js"></script>
+
+</main>
+
+</div>
+
+</body>
+
+</html>

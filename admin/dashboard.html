@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="Lama Laundry ERP - لوحة التحكم لإدارة مغاسل لمى">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>لوحة التحكم | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/dashboard.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+    defer></script>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img src="../assets/images/logo.png">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+    <i class="fas fa-chart-line"></i>
+    الرئيسية
+</a>
+
+<a href="orders.html">
+    <i class="fas fa-basket-shopping"></i>
+    الطلبات
+</a>
+
+<a href="customers.html">
+    <i class="fas fa-users"></i>
+    العملاء
+</a>
+
+<a href="pickup.html">
+    <i class="fas fa-truck-pickup"></i>
+    الاستلام
+</a>
+
+<a href="delivery.html">
+    <i class="fas fa-truck-fast"></i>
+    التوصيل
+</a>
+
+<a href="inventory.html">
+    <i class="fas fa-boxes-stacked"></i>
+    المخزون
+</a>
+
+<a href="employees.html">
+    <i class="fas fa-user-tie"></i>
+    الموظفون
+</a>
+
+<a href="reports.html">
+    <i class="fas fa-chart-pie"></i>
+    التقارير
+</a>
+
+<a href="settings.html">
+    <i class="fas fa-gear"></i>
+    الإعدادات
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<div>
+
+<h1>لوحة التحكم</h1>
+
+<p>مرحبًا بك في نظام Lama Laundry ERP</p>
+
+</div>
+
+<div class="actions">
+
+<button id="refreshDashboard">
+
+<i class="fas fa-rotate"></i>
+
+تحديث
+</button>
+
+<button id="logoutBtn" class="logout-btn">
+    <i class="fas fa-right-from-bracket"></i>
+    تسجيل الخروج
+</button>
+</div>
+
+</header>
+
+<section class="cards">
+
+    <div class="card">
+
+        <h2 id="dashboardOrders">0</h2>
+
+        <span>إجمالي الطلبات</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="dashboardCustomers">0</h2>
+
+        <span>العملاء</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="dashboardRevenue">0</h2>
+
+        <span>الإيرادات</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="dashboardPending">0</h2>
+
+        <span>طلبات قيد التنفيذ</span>
+
+    </div>
+
+</section>
+<section class="charts">
+
+    <div class="chart-card">
+
+        <h3>إيرادات الأشهر</h3>
+
+        <canvas
+            id="revenueChart"
+            aria-label="الرسم البياني للإيرادات الشهرية"
+            role="img">
+        </canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h3>حالة الطلبات</h3>
+
+        <canvas
+            id="statusChart"
+            aria-label="الرسم البياني لحالة الطلبات"
+            role="img">
+        </canvas>
+
+    </div>
+
+</section>
+
+<section class="dashboard-grid">
+
+    <div class="dashboard-card">
+
+        <h3>آخر الطلبات</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>رقم الطلب</th>
+                    <th>العميل</th>
+                    <th>الحالة</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="latestOrdersTable"></tbody>
+
+        </table>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <h3>
+
+            تنبيهات المخزون
+
+            <span
+                id="notificationsCount"
+                class="notification-badge">
+                0
+            </span>
+
+        </h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>الصنف</th>
+                    <th>المتبقي</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="lowStockTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<section class="dashboard-grid">
+
+    <div class="dashboard-card">
+
+        <h3>آخر العملاء</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>الاسم</th>
+                    <th>الجوال</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="latestCustomersTable"></tbody>
+
+        </table>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <h3>آخر الفواتير</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>رقم الفاتورة</th>
+                    <th>القيمة</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="latestInvoicesTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+<!-- Firebase -->
+
+<script
+    type="module"
+    src="../firebase/auth-guard.js">
+</script>
+
+<script
+    type="module"
+    src="../firebase/logout.js">
+</script>
+
+<!-- Dashboard -->
+
+<script
+    type="module"
+    src="../assets/js/dashboard.js">
+</script>
+
+</body>
+
+</html>

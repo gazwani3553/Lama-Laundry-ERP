@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>طلب جديد | مغاسل لمى الذكية</title>
+
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+}
+
+.container{
+
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+h1{
+
+text-align:center;
+margin-bottom:30px;
+color:#0f4c81;
+
+}
+
+.form-group{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+margin-bottom:8px;
+font-weight:bold;
+
+}
+
+input,
+select,
+textarea{
+
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:15px;
+
+}
+
+textarea{
+
+resize:vertical;
+min-height:100px;
+
+}
+
+button{
+
+width:100%;
+padding:14px;
+border:none;
+border-radius:8px;
+background:#0f4c81;
+color:#fff;
+font-size:18px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#0c3d68;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>طلب استلام ملابس</h1>
+
+<form id="orderForm">
+
+<div class="form-group">
+
+<label>الاسم</label>
+
+<input
+type="text"
+id="name"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>رقم الجوال</label>
+
+<input
+type="tel"
+id="phone"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>العنوان</label>
+
+<input
+type="text"
+id="address"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>الخدمة</label>
+
+<select id="service" required>
+
+<option value="">اختر الخدمة</option>
+
+<option>غسيل</option>
+
+<option>كي</option>
+
+<option>غسيل وكي</option>
+
+<option>بطانيات</option>
+
+<option>سجاد</option>
+
+<option>مفارش</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>تاريخ الاستلام</label>
+
+<input
+type="date"
+id="date"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>وقت الاستلام</label>
+
+<input
+type="time"
+id="time"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>ملاحظات</label>
+
+<textarea
+id="notes"
+placeholder="أي ملاحظات إضافية..."></textarea>
+
+</div>
+
+<div class="form-group">
+
+<button type="submit">
+
+إرسال الطلب
+
+</button>
+
+</div>
+
+</form>
+
+<div
+id="successMessage"
+style="display:none;
+margin-top:20px;
+padding:15px;
+background:#d4edda;
+color:#155724;
+border-radius:8px;
+text-align:center;
+font-weight:bold;">
+
+تم إرسال طلبك بنجاح ✅
+
+</div>
+
+</div>
+<!-- Firebase -->
+
+<script type="module" src="../firebase/firebase-config.js"></script>
+
+<!-- كود إنشاء الطلب -->
+
+<script type="module" src="../assets/js/app.js"></script>
+
+</body>
+
+</html>

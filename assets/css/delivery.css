@@ -1,0 +1,305 @@
+/* ==========================================
+   Lama Laundry ERP v1.0
+   delivery.css
+========================================== */
+
+:root{
+    --primary:#1976d2;
+    --primary-dark:#1565c0;
+    --success:#43a047;
+    --warning:#fb8c00;
+    --danger:#e53935;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --border:#e5e7eb;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --radius:14px;
+    --shadow:0 10px 24px rgba(0,0,0,.08);
+}
+
+.content{
+    padding:24px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.actions{
+    display:flex;
+    gap:12px;
+}
+
+.actions button{
+    height:46px;
+    padding:0 18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.card{
+    background:#fff;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:24px;
+    text-align:center;
+}
+
+.card h2{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.card span{
+    color:var(--muted);
+}
+
+.toolbar{
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.toolbar input,
+.toolbar select{
+    height:48px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0 15px;
+    font-size:15px;
+}
+
+.toolbar input{
+    flex:1;
+}
+
+.table-section{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.delivery-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.delivery-table thead{
+    background:var(--primary);
+    color:#fff;
+}
+
+.delivery-table th,
+.delivery-table td{
+    padding:14px 12px;
+    text-align:center;
+    border-bottom:1px solid #ececec;
+}
+
+/* ==========================================
+   حالات التوصيل
+========================================== */
+
+.delivery-status{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.status-waiting{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.status-route{
+    background:#d1ecf1;
+    color:#0c5460;
+}
+
+.status-completed{
+    background:#d4edda;
+    color:#2e7d32;
+}
+
+/* ==========================================
+   أزرار الإجراءات
+========================================== */
+
+.action-buttons{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+}
+
+.action-buttons button{
+    width:36px;
+    height:36px;
+    border:none;
+    border-radius:8px;
+    color:#fff;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.action-buttons button:hover{
+    transform:scale(1.08);
+}
+
+.edit-btn{
+    background:#2196f3;
+}
+
+.map-btn{
+    background:#fb8c00;
+}
+
+.done-btn{
+    background:#43a047;
+}
+
+.delete-btn{
+    background:#e53935;
+}
+
+/* ==========================================
+   النافذة المنبثقة
+========================================== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.45);
+    z-index:999;
+}
+
+.hidden{
+    display:none;
+}
+
+.modal-content{
+    width:820px;
+    max-width:95%;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 18px 40px rgba(0,0,0,.2);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 22px;
+    border-bottom:1px solid #eee;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+    padding:22px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.field input,
+.field select,
+.field textarea{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:12px;
+    font-size:14px;
+}
+
+.field textarea{
+    resize:vertical;
+    min-height:110px;
+}
+
+.field.full{
+    grid-column:1 / -1;
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    padding:18px 22px;
+    border-top:1px solid #eee;
+}
+
+#cancelDeliveryBtn{
+    background:#eceff1;
+    color:#333;
+    padding:12px 18px;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width:900px){
+
+.cards{
+    grid-template-columns:1fr;
+}
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+.toolbar{
+    flex-direction:column;
+}
+
+.topbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.actions{
+    width:100%;
+}
+
+.actions button{
+    flex:1;
+}
+
+.delivery-table{
+    display:block;
+    overflow-x:auto;
+}
+
+}

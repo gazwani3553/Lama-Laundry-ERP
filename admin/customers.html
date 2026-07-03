@@ -1,0 +1,376 @@
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="إدارة عملاء مغاسل لمى الذكية">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>العملاء | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/customers.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+    src="../assets/images/logo.png"
+    alt="Lama Laundry ERP Logo"
+    loading="lazy">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+<i class="fas fa-chart-line"></i>
+<span>الرئيسية</span>
+</a>
+
+<a href="orders.html">
+<i class="fas fa-basket-shopping"></i>
+<span>الطلبات</span>
+</a>
+
+<a
+href="customers.html"
+class="active"
+aria-current="page">
+<i class="fas fa-users"></i>
+<span>العملاء</span>
+</a>
+
+<a href="pickup.html">
+<i class="fas fa-truck-pickup"></i>
+<span>الاستلام</span>
+</a>
+
+<a href="delivery.html">
+<i class="fas fa-truck-fast"></i>
+<span>التوصيل</span>
+</a>
+
+<a href="inventory.html">
+<i class="fas fa-boxes-stacked"></i>
+<span>المخزون</span>
+</a>
+
+<a href="employees.html">
+<i class="fas fa-user-tie"></i>
+<span>الموظفون</span>
+</a>
+
+<a href="reports.html">
+<i class="fas fa-chart-pie"></i>
+<span>التقارير</span>
+</a>
+
+<a href="settings.html">
+<i class="fas fa-gear"></i>
+<span>الإعدادات</span>
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+    <div>
+
+        <h1>إدارة العملاء</h1>
+
+        <p>قاعدة بيانات جميع عملاء مغاسل لمى الذكية</p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            id="refreshCustomers"
+            type="button"
+            aria-label="تحديث قائمة العملاء">
+
+            <i class="fas fa-rotate"></i>
+
+            تحديث
+
+        </button>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            type="button"
+            aria-label="تسجيل الخروج">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            تسجيل الخروج
+
+        </button>
+
+        <button
+            id="newCustomerBtn"
+            class="primary"
+            type="button"
+            aria-label="إضافة عميل جديد">
+
+            <i class="fas fa-user-plus"></i>
+
+            عميل جديد
+
+        </button>
+
+    </div>
+
+</header>
+
+<!-- بطاقات الإحصائيات -->
+
+<section class="cards">
+
+    <div class="card">
+
+        <h2 id="customersCount">0</h2>
+
+        <span>إجمالي العملاء</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="vipCustomers">0</h2>
+
+        <span>العملاء المميزون</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="todayCustomers">0</h2>
+
+        <span>عملاء اليوم</span>
+
+    </div>
+
+</section>
+
+<!-- البحث -->
+
+<section class="toolbar">
+
+    <input
+        id="searchCustomer"
+        type="search"
+        autocomplete="off"
+        placeholder="بحث بالاسم أو رقم الجوال أو العنوان">
+
+</section>
+
+<!-- جدول العملاء -->
+
+<section class="table-section">
+
+    <table class="customers-table">
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+                <th>اسم العميل</th>
+                <th>رقم الجوال</th>
+                <th>العنوان</th>
+                <th>عدد الطلبات</th>
+                <th>إجمالي الإنفاق</th>
+                <th>آخر زيارة</th>
+                <th>الإجراءات</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="customersTableBody">
+
+            <!-- customers.js -->
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<!-- نافذة إضافة / تعديل العميل -->
+
+<div
+    id="customerModal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="customerModalTitle">
+
+                عميل جديد
+
+            </h2>
+
+            <button
+                id="closeCustomerModal"
+                type="button"
+                aria-label="إغلاق">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <form id="customerForm">
+
+            <div class="grid">
+
+                <div class="field">
+
+                    <label for="customerName">
+
+                        اسم العميل
+
+                    </label>
+
+                    <input
+                        id="customerName"
+                        type="text"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="customerPhone">
+
+                        رقم الجوال
+
+                    </label>
+
+                    <input
+                        id="customerPhone"
+                        type="tel"
+                        required>
+
+                </div>
+
+                <div class="field">
+
+                    <label for="customerAddress">
+
+                        العنوان
+
+                    </label>
+
+                    <input
+                        id="customerAddress"
+                        type="text">
+
+                </div>
+
+                <div class="field">
+
+                    <label for="customerNotes">
+
+                        ملاحظات
+
+                    </label>
+
+                    <textarea
+                        id="customerNotes"
+                        rows="4"></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="cancelCustomerBtn"
+                    type="button">
+
+                    إلغاء
+
+                </button>
+
+                <button
+                    class="primary"
+                    type="submit">
+
+                    <i class="fas fa-save"></i>
+
+                    حفظ
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script type="module" src="../../firebase/auth-guard.js"></script>
+
+<script type="module" src="../../firebase/logout.js"></script>
+
+<script type="module" src="../assets/js/customers.js"></script>
+
+</body>
+</html>

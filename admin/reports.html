@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+<meta
+    name="description"
+    content="التقارير والإحصائيات - Lama Laundry ERP">
+
+<meta
+    name="theme-color"
+    content="#0d6efd">
+
+<title>التقارير | Lama Laundry ERP</title>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../assets/images/favicon.png">
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/main.css">
+
+<link
+    rel="stylesheet"
+    href="../assets/css/reports.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+    defer>
+</script>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+    src="../assets/images/logo.png"
+    alt="Lama Laundry ERP Logo"
+    loading="lazy">
+
+<h2>Lama ERP</h2>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+<i class="fas fa-chart-line"></i>
+<span>الرئيسية</span>
+</a>
+
+<a href="orders.html">
+<i class="fas fa-basket-shopping"></i>
+<span>الطلبات</span>
+</a>
+
+<a href="customers.html">
+<i class="fas fa-users"></i>
+<span>العملاء</span>
+</a>
+
+<a href="pickup.html">
+<i class="fas fa-truck-pickup"></i>
+<span>الاستلام</span>
+</a>
+
+<a href="delivery.html">
+<i class="fas fa-truck-fast"></i>
+<span>التوصيل</span>
+</a>
+
+<a href="inventory.html">
+<i class="fas fa-boxes-stacked"></i>
+<span>المخزون</span>
+</a>
+
+<a href="employees.html">
+<i class="fas fa-user-tie"></i>
+<span>الموظفون</span>
+</a>
+
+<a
+href="reports.html"
+class="active"
+aria-current="page">
+<i class="fas fa-chart-pie"></i>
+<span>التقارير</span>
+</a>
+
+<a href="settings.html">
+<i class="fas fa-gear"></i>
+<span>الإعدادات</span>
+</a>
+
+</nav>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+    <div>
+
+        <h1>التقارير والإحصائيات</h1>
+
+        <p>تحليل الأداء والإيرادات لمغاسل لمى الذكية</p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            id="refreshReports"
+            type="button"
+            aria-label="تحديث التقارير">
+
+            <i class="fas fa-rotate"></i>
+
+            تحديث
+
+        </button>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            type="button"
+            aria-label="تسجيل الخروج">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            تسجيل الخروج
+
+        </button>
+
+        <button
+            id="printReport"
+            class="primary"
+            type="button"
+            aria-label="طباعة التقرير">
+
+            <i class="fas fa-print"></i>
+
+            طباعة التقرير
+
+        </button>
+
+    </div>
+
+</header>
+
+<!-- بطاقات الإحصائيات -->
+
+<section class="cards">
+
+    <div class="card">
+
+        <h2 id="salesToday">0</h2>
+
+        <span>مبيعات اليوم</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="ordersToday">0</h2>
+
+        <span>طلبات اليوم</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="customersToday">0</h2>
+
+        <span>عملاء اليوم</span>
+
+    </div>
+
+    <div class="card">
+
+        <h2 id="monthlyRevenue">0</h2>
+
+        <span>إجمالي الإيرادات</span>
+
+    </div>
+
+</section>
+
+<!-- الرسوم البيانية -->
+
+<section class="charts">
+
+    <div class="chart-card">
+
+        <h3>المبيعات الشهرية</h3>
+
+        <canvas
+            id="salesChart"
+            aria-label="الرسم البياني للمبيعات"
+            role="img"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h3>حالة الطلبات</h3>
+
+        <canvas
+            id="ordersChart"
+            aria-label="الرسم البياني لحالة الطلبات"
+            role="img"></canvas>
+
+    </div>
+
+</section>
+
+<!-- الجداول -->
+
+<section class="reports-grid">
+
+    <div class="report-card">
+
+        <h3>أفضل العملاء</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>العميل</th>
+                    <th>عدد الطلبات</th>
+                    <th>الإجمالي</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="topCustomersTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="report-card">
+
+        <h3>أكثر الخدمات طلبًا</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>الخدمة</th>
+                    <th>عدد الطلبات</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="topServicesTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<section class="reports-grid">
+
+    <div class="report-card">
+
+        <h3>المخزون المنخفض</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>الصنف</th>
+                    <th>المتبقي</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="lowStockTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="report-card">
+
+        <h3>آخر الطلبات</h3>
+
+        <table class="mini-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>رقم الطلب</th>
+                    <th>العميل</th>
+                    <th>القيمة</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="latestOrdersTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- JavaScript -->
+
+<!-- حماية الصفحة -->
+<script
+    type="module"
+    src="../firebase/auth-guard.js">
+</script>
+
+<!-- تسجيل الخروج -->
+<script
+    type="module"
+    src="../firebase/logout.js">
+</script>
+
+<!-- منطق صفحة التقارير -->
+<script
+    type="module"
+    src="../assets/js/reports.js">
+</script>
+
+</main>
+
+</div>
+
+</body>
+
+</html>
