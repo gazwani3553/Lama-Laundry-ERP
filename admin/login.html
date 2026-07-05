@@ -71,6 +71,20 @@ cursor:pointer;
 
 <script type="module" src="../assets/js/login.js"></script>
 
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("../service-worker.js")
+            .then((registration) => {
+                console.log("Service Worker Registered", registration);
+            })
+            .catch((error) => {
+                console.error("Service Worker Registration Failed:", error);
+            });
+    });
+}
+</script>
 </body>
 
 </html>
